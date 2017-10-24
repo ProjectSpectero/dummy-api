@@ -1,0 +1,11 @@
+{
+  "name": "spectero-dummy-api",
+  "version": "1.0.0",
+  "description": "Dummy API with webserver for testing Spectero panel frontend",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js"
+  },
+  "author": "Anatolie Diordita <contact@anatolie.me>",
+  "license": "ISC"
+}
