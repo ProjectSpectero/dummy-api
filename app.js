@@ -22,6 +22,9 @@ const requestHandler = (request, response) => {
     response.end(`405 not allowed`)
   }
 
+  response.setHeader(`Content-Type`, `application/json`)
+  response.setHeader(`Access-Control-Allow-Origin`, `*`)
+
   switch ( request.url ) {
     case '/nodes':
       switch ( request.method ) {
