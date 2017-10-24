@@ -12,6 +12,7 @@ const jwt = require('jsonwebtoken')
 const data = require('./data.js')
 
 const port = 3000 // Port for server (default: 3000)
+const secret = 'a$+,@:}-QNaCJK/gPy65%zj>tKZ>)w4/' // Secret hash for JSON web token (plaintext is obviously most secure way to handle this ^_^)
 
 let formatResponse = function (code, errors, message, data, endpoint) {
   return {
@@ -45,7 +46,7 @@ app.use(function(req, res, next) {
   next()
 })
 
-app.use(expressJWT({ secret: 'abc123' }).unless({ path: ['/login', '/nodes'] }))
+app.use(expressJWT({ secret: secret }).unless({ path: ['/login', '/nodes'] }))
 
 app.route('/nodes')
 .get(function (req, res, next) {
@@ -76,7 +77,9 @@ app.route('/login')
   }
 
   // Logged in!
-  res.locals.data = {authToken: 'abc123'}
+  let myToken = jwt.sign({ username: username }, secret)
+  res.locals.data = {authToken: myToken}
+
   next()
 
 }, sendResult)
