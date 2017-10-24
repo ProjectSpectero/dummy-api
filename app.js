@@ -41,7 +41,7 @@ app.use(function(req, res, next) {
 
 app.route('/nodes')
 .get(function (req, res, next) {
-  res.locals.data = data.nodes
+  res.locals.data = { nodes: data.nodes }
   next()
 }, sendResult)
 
