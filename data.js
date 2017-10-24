@@ -3,6 +3,16 @@
  */
 
 module.exports = {
+  
+  // Warning: most unsecure plain-text authentication system you'll ever see below
+  users: {
+    'demo1': {
+      password: 'password123'
+    },
+    'demo2': {
+      password: 'oranges'
+    }
+  },
   nodes: [
     {
       id: 1,

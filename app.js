@@ -5,6 +5,9 @@
 const express = require('express')
 const app = express()
 const router = express.Router()
+const bodyParser = require('body-parser')
+const expressJWT = require('express-jwt')
+const jwt = require('jsonwebtoken')
 
 const data = require('./data.js')
 
@@ -34,15 +37,48 @@ let sendResult = function (req, res, next) {
 
 }
 
+app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({ extended: true }));
+
 app.use(function(req, res, next) {
   res.header('Access-Control-Allow-Origin', '*')
   next()
 })
 
+app.use(expressJWT({ secret: 'abc123' }).unless({ path: ['/login', '/nodes'] }))
+
 app.route('/nodes')
 .get(function (req, res, next) {
   res.locals.data = { nodes: data.nodes }
   next()
+}, sendResult)
+
+// Basic login handler
+app.route('/login')
+.post(function (req, res, next) {
+
+  let username = req.body.username
+  let password = req.body.password
+  let user = data.users[username]
+
+  // Username/password missing
+  if ( !username || !password ) {
+    res.locals.code = 400
+    res.locals.errors = ['Missing username or password.']
+    return next()
+  }
+
+  // User not found
+  if ( user === undefined || user.password !== password ) {
+    res.locals.code = 401
+    res.locals.errors = ['Invalid username or password.']
+    return next()
+  }
+
+  // Logged in!
+  res.locals.data = {authToken: 'abc123'}
+  next()
+
 }, sendResult)
 
 app.use('/', router)

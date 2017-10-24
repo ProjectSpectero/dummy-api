@@ -9,6 +9,9 @@
   "author": "Anatolie Diordita <contact@anatolie.me>",
   "license": "ISC",
   "dependencies": {
-    "express": "^4.16.2"
+    "body-parser": "^1.18.2",
+    "express": "^4.16.2",
+    "express-jwt": "^5.3.0",
+    "jsonwebtoken": "^8.1.0"
   }
 }
