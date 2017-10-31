@@ -3,6 +3,7 @@
  */
 
 const express = require('express')
+const cors = require('cors')
 const app = express()
 const router = express.Router()
 const bodyParser = require('body-parser')
@@ -13,6 +14,8 @@ const data = require('./data.js')
 
 const port = 3000 // Port for server (default: 3000)
 const secret = 'a$+,@:}-QNaCJK/gPy65%zj>tKZ>)w4/' // Secret hash for JSON web token (plaintext is obviously most secure way to handle this ^_^)
+
+app.use(cors())
 
 let formatResponse = function (code, errors, message, data, endpoint) {
   return {
@@ -43,6 +46,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use(function(req, res, next) {
   res.header('Access-Control-Allow-Origin', '*')
+  res.header('Access-Control-Allow-Headers', 'X-Requested-With')
   next()
 })
 
